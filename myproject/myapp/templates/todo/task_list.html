@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            position: relative; /* Ensure positioning context */
+        }
+        h2 {
+            color: #333333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .logout a {
+            color: #666666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .logout a:hover {
+            color: #333333;
+        }
+        .add-task {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .add-task a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .add-task a:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            font-size: 16px; /* Larger font size for task list items */
+        }
+        li:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+        li a {
+            color: #333333;
+            text-decoration: none;
+        }
+        .action-links {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+        }
+        .action-links a {
+            color: #666666;
+            text-decoration: none;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        .action-links a:hover {
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout">
+        <a href="{% url 'logout_confirmation' %}">Logout</a>
+    </div>
+    <h2>Task List</h2>
+    <div class="add-task">
+        <a href="{% url 'task_create' %}">Add Task</a>
+    </div>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
+            <div class="action-links">
+                <a href="{% url 'task_edit' task.id %}">Edit</a>
+                <a href="{% url 'task_delete' task.id %}">Delete</a>
+                {% if not task.completed %}
+                <a href="{% url 'task_complete' task.id %}">Mark as Completed</a>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

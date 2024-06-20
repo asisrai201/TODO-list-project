@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .task-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        h2 {
+            color: #333333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .action-links {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .action-links a {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .action-links a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.description }}</p>
+        <p><strong>Completed:</strong> {{ task.completed }}</p>
+        <p><strong>Created at:</strong> {{ task.created_at }}</p>
+        <div class="action-links">
+            <a href="{% url 'task_edit' task.id %}">Edit</a>
+            <a href="{% url 'task_delete' task.id %}">Delete</a>
+            {% if not task.completed %}
+            <a href="{% url 'task_complete' task.id %}">Mark as Completed</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
